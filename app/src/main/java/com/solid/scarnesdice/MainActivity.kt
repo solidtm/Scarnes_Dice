@@ -17,6 +17,9 @@ class MainActivity : AppCompatActivity() {
          var compOverallScore: Int
          var compTurnScore: Int
 
+         binding.rollButton.setOnClickListener{
+
+         }
 
     }
 }
