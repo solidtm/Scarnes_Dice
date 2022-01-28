@@ -18,10 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
-
-
+        binding.diceImageView.setImageResource(R.drawable.dice1)
 
         binding.rollButton.setOnClickListener {
             random = (1..6).random()
@@ -37,12 +34,14 @@ class MainActivity : AppCompatActivity() {
                 6 -> imageView.setImageResource(R.drawable.dice6)
             }
 
-            if (random != 1) {
-                usersTurnScore = random
-                scoreText.text = "Your turn score: $random "
-            }else if(random == 1){
+
+            if(random == 1){
                 usersTurnScore = 0
                 scoreText.text = "Your turn score: 0 "
+                computerTurn()
+            }else{
+                usersTurnScore = random
+                scoreText.text = "Your turn score: $random "
             }
         }
 
@@ -51,6 +50,8 @@ class MainActivity : AppCompatActivity() {
             usersTurnScore = 0
 
             binding.scoreTextView.text = "Your turn score: 0 "
+
+            computerTurn()
         }
 
         binding.resetButton.setOnClickListener{
@@ -64,6 +65,27 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun computerTurn(){
+        binding.holdButton.isEnabled = false
+        binding.rollButton.isEnabled = false
 
+        val turn = 2
+        while (turn <= 2){
+            random = (1..6).random()
+            if (random == 1){
+                compTurnScore = 0
+                binding.scoreTextView.text = "Computer turn score: 0 "
+                break
+            }else{
+                compTurnScore = random
+                binding.scoreTextView.text = "Computer turn score: $random "
+                compOverallScore += compTurnScore
+            }
+        }
+
+        binding.scoreTextView.text = "Computer holds: $compOverallScore "
+        binding.holdButton.isEnabled = true
+        binding.rollButton.isEnabled = true
+    }
 
 }
